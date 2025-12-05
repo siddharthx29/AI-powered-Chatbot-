@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
+
 {% block content %}
 
-<div class="chat-container" id="chat-container">
-    {% if answer %}
-        <div class="message user"><div class="bubble">{{ query }}</div></div>
-        <div class="message ai"><div class="bubble">{{ answer }}</div></div>
+<div class="chat-container">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="chat-message {{ msg.role }}">
+                <div class="message-content">
+                    {{ msg.content | safe }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="color: #777; text-align: center; margin-top: 20px;">
+            Start a new chat or ask something to begin...
+        </p>
     {% endif %}
 </div>
-
-<form method="POST" class="input-area">
-    <input type="text" name="query" placeholder="Ask anything about PC builds..." required>
-    <button type="submit">Send</button>
-</form>
 
 {% endblock %}

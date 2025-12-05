@@ -3,30 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>PC Build AI Assistant</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-<div class="sidebar">
-    <h2>⚡ Chats</h2>
+<div class="app-wrapper">
 
-    <ul>
-        <li onclick="location.href='/'">PC Build Chat</li>
-        <li onclick="location.href='/new'">New Chat</li>
-        <li onclick="location.href='/troubleshoot'">AI Troubleshooting</li>
-        <li onclick="location.href='/gpu'">GPU Advisor</li>
-        <li onclick="location.href='/about'">About</li>
-    </ul>
-</div>
-
-<div class="chat-wrapper">
-    <div class="header">
-        <h2>{{ header_title }}</h2>
-        <p>{{ header_sub }}</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a class="nav-item" href="/new-chat">New Chat</a>
+        <a class="nav-item" href="/">PC Build Chat</a>
+        <a class="nav-item" href="/ai-troubleshooting">AI Troubleshooting</a>
+        <a class="nav-item" href="/gpu-advisor">GPU Advisor</a>
+        <a class="nav-item" href="/about">About</a>
     </div>
 
-    {% block content %}{% endblock %}
+    <!-- Main Area -->
+    <div class="main-area">
+
+        <div class="header">🖥️ PC Build AI Assistant</div>
+
+        <!-- Dynamic page content -->
+        <div class="page-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- UNIVERSAL MESSAGE BAR (Now on all pages) -->
+        <form method="POST" action="/" class="input-section">
+            <input 
+                type="text"
+                name="user_input"
+                class="input-box"
+                placeholder="Ask anything about PC builds..."
+                required
+            >
+            <button class="send-btn" type="submit">Send</button>
+        </form>
+
+    </div>
+
 </div>
 
 </body>

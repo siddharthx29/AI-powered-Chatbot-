@@ -1,86 +1,53 @@
 from flask import Flask, render_template, request
-from pc_ai_lib.ai_helpers import get_ai_response
+from pc_ai_lib.ai_helpers import get_ai_response   # FIXED IMPORT
 
 app = Flask(__name__)
+messages = []
 
-# ---------------- HOME (PC BUILD CHAT) ----------------
+
 @app.route("/", methods=["GET", "POST"])
 def home():
-    answer = None
-    query = None
+    global messages
 
     if request.method == "POST":
-        query = request.form["query"]
-        answer = get_ai_response(query)
+        user_text = request.form.get("user_input")
+        if not user_text:
+            return "Bad Request", 400
 
-    return render_template(
-        "index.html",
-        title="PC Build Assistant",
-        header_title="💻 PC Build AI Assistant",
-        header_sub="Ask anything about builds, compatibility, upgrades & more.",
-        answer=answer,
-        query=query
-    )
+        messages.append({"role": "user", "content": user_text})
 
-# ---------------- NEW CHAT PAGE ----------------
-@app.route("/new")
+        ai_reply = get_ai_response(user_text)
+        messages.append({"role": "assistant", "content": ai_reply})
+
+    return render_template("index.html", messages=messages)
+
+
+@app.route("/new-chat")
 def new_chat():
-    return render_template(
-        "index.html",
-        title="New Chat",
-        header_title="💬 New Chat",
-        header_sub="Start a fresh conversation.",
-        answer=None,
-        query=None
-    )
+    global messages
+    messages = []
+    return render_template("index.html", messages=messages)
 
-# ---------------- TROUBLESHOOT PAGE ----------------
-@app.route("/troubleshoot", methods=["GET", "POST"])
-def troubleshoot():
-    answer = None
-    query = None
 
-    if request.method == "POST":
-        query = request.form["query"]
-        answer = get_ai_response("Troubleshoot this issue: " + query)
+@app.route("/pc-build-chat")
+def pc_build_chat():
+    return render_template("pc_build_chat.html")
 
-    return render_template(
-        "troubleshooting.html",
-        title="Troubleshooting",
-        header_title="🛠 Troubleshooting AI",
-        header_sub="Fix crashes, lag, overheating, errors, BSOD & more.",
-        answer=answer,
-        query=query
-    )
 
-# ---------------- GPU PAGE ----------------
-@app.route("/gpu", methods=["GET", "POST"])
-def gpu():
-    answer = None
-    query = None
+@app.route("/ai-troubleshooting")
+def ai_troubleshooting():
+    return render_template("troubleshooting.html")   # MATCHES FILE NAME
 
-    if request.method == "POST":
-        query = request.form["query"]
-        answer = get_ai_response("GPU advice: " + query)
 
-    return render_template(
-        "gpu.html",
-        title="GPU Advisor",
-        header_title="🎮 GPU Advisor",
-        header_sub="Ask about GPUs, bottlenecks, performance & gaming.",
-        answer=answer,
-        query=query
-    )
+@app.route("/gpu-advisor")
+def gpu_advisor():
+    return render_template("gpu.html")  # MATCHES FILE NAME
 
-# ---------------- ABOUT PAGE ----------------
+
 @app.route("/about")
 def about():
-    return render_template(
-        "about.html",
-        title="About AI",
-        header_title="ℹ️ About this AI Assistant",
-        header_sub="Learn more about how this AI works."
-    )
+    return render_template("about.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
