@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="chat-container" id="chat-container">
+    {% if answer %}
+        <div class="message user"><div class="bubble">{{ query }}</div></div>
+        <div class="message ai"><div class="bubble">{{ answer }}</div></div>
+    {% endif %}
+</div>
+
+<form method="POST" class="input-area">
+    <input type="text" name="query" placeholder="Describe your PC problem..." required>
+    <button type="submit">Fix</button>
+</form>
+
+{% endblock %}

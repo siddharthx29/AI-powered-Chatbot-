@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: pc_ai_lib
+Version: 0.1.0
+Summary: Python library for PC Build & Troubleshooting AI
+Home-page: https://github.com/yourusername/pc_ai_lib
+Author: Siddharth MV
+Requires-Python: >=3.9
+Requires-Dist: requests
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

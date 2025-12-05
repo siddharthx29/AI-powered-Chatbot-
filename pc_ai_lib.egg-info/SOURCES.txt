@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+setup.py
+pc_ai_lib/__init__.py
+pc_ai_lib/ai_helpers.py
+pc_ai_lib.egg-info/PKG-INFO
+pc_ai_lib.egg-info/SOURCES.txt
+pc_ai_lib.egg-info/dependency_links.txt
+pc_ai_lib.egg-info/requires.txt
+pc_ai_lib.egg-info/top_level.txt
